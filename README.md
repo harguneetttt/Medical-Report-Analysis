@@ -1,8 +1,6 @@
 # Automated Medical Report Analysis and Recommendation System  
 ### Developed by: **Harguneet Kaur**  
 ### Guided by: **Mr. Mudrik Kaushik**  
-### Course: CSE AIFT, 3rd Semester  
-### Chitkara University  
 
 ---
 
