@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HKPharma — Medical Report Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f7faff;
+    color: #1b2a41;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 50px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #0a59cc;
+}
+
+.logo img {
+    width: 32px;
+}
+
+.nav-btns a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #0a59cc;
+    font-weight: 500;
+}
+
+.hero {
+    padding: 80px 50px;
+    background: linear-gradient(135deg, #dcecff, #f7fbff);
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    color: #0a3d8f;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #3d5272;
+}
+
+.upload-area {
+    margin-top: 35px;
+}
+
+#fileInput {
+    padding: 14px;
+    background: white;
+    border: 2px dashed #8dbdff;
+    border-radius: 10px;
+    width: 280px;
+}
+
+.upload-btn {
+    margin-left: 15px;
+    padding: 14px 26px;
+    background: #0a59cc;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.upload-btn:hover {
+    background: #083c8c;
+}
+
+.analysis-container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    margin: 50px auto;
+    width: 85%;
+}
+
+.summary-card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,60,150,0.1);
+    border: 1px solid #e0eaff;
+}
+
+.summary-card h2 {
+    margin: 0 0 15px;
+    color: #0a3c8c;
+}
+
+.summary-content {
+    line-height: 1.7;
+}
+
+.chat-card {
+    background: #f0f6ff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,60,150,0.1);
+    border: 1px solid #d8e6ff;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-card h3 {
+    margin: 0 0 10px;
+    color: #0a3c8c;
+}
+
+.chat-box {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    height: 350px;
+    overflow-y: auto;
+    border: 1px solid #dce7ff;
+}
+
+.chat-msg-user {
+    text-align: right;
+    margin: 8px 0;
+}
+
+.chat-msg-user span {
+    background: #d6eaff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.chat-msg-ai {
+    text-align: left;
+    margin: 8px 0;
+}
+
+.chat-msg-ai span {
+    background: #eef3ff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.chat-input-area {
+    display: flex;
+    margin-top: 15px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px 0 0 10px;
+    border: 1px solid #a7c7ff;
+}
+
+.chat-input-area button {
+    background: #0a59cc;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 0 10px 10px 0;
+}
+
+.chat-input-area button:hover {
+    background: #083c8c;
+}
+
+.benefits {
+    margin-top: 100px;
+    padding: 60px 60px;
+    background: white;
+}
+
+.benefits h2 {
+    text-align: center;
+    color: #0a3d8f;
+    margin-bottom: 35px;
+}
+
+.benefit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 35px;
+}
+
+.benefit-card {
+    background: #f7fbff;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #e2ecff;
+    box-shadow: 0 4px 12px rgba(0,80,160,0.07);
+}
+
+.benefit-card img {
+    width: 90px;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png">
+        HKPharma
+    </div>
+    <div class="nav-btns">
+        <a href="#">Login</a>
+        <a href="#">Signup</a>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Medical Report Analyzer</h1>
+    <p>Upload your medical report and get an AI-powered explanation instantly.</p>
+    <div class="upload-area">
+        <input type="file" id="fileInput" accept="image/*">
+        <button class="upload-btn" onclick="uploadFile()">Analyze Report</button>
+    </div>
+</section>
+
+<section id="analysisSection" style="display:none;">
+    <div class="analysis-container">
+
+        <div class="summary-card">
+            <h2>Summary</h2>
+            <div id="summaryText" class="summary-content"></div>
+        </div>
+
+        <div class="chat-card">
+            <h3>Ask Follow-up Questions</h3>
+            <div id="chatBox" class="chat-box"></div>
+            <div class="chat-input-area">
+                <input id="chatInput" type="text" placeholder="Ask something...">
+                <button onclick="sendChat()">Send</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="benefits">
+    <h2>Benefits of AI in Healthcare</h2>
+    <div class="benefit-grid">
+        <div class="benefit-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2920/2920244.png">
+            <h3>Faster Diagnosis</h3>
+            <p>AI helps detect abnormalities sooner for better outcomes.</p>
+        </div>
+
+        <div class="benefit-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2966/2966369.png">
+            <h3>Accurate Insights</h3>
+            <p>Machine learning enhances precision in identifying symptoms.</p>
+        </div>
+
+        <div class="benefit-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2966/2966381.png">
+            <h3>Efficient Process</h3>
+            <p>Instant summaries reduce waiting time and improve clarity.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+let chatHistory = [];
+
+function addMessage(role, text) {
+    const box = document.getElementById("chatBox");
+    const msg = document.createElement("div");
+    msg.className = role === "user" ? "chat-msg-user" : "chat-msg-ai";
+    msg.innerHTML = `<span>${text}</span>`;
+    box.appendChild(msg);
+    box.scrollTop = box.scrollHeight;
+}
+
+async function uploadFile() {
+    const file = document.getElementById("fileInput").files[0];
+    if (!file) return alert("Select an image first.");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch("/analyze-report", {
+        method: "POST",
+        body: formData
+    });
+
+    const summary = await response.text();
+    document.getElementById("analysisSection").style.display = "block";
+    document.getElementById("summaryText").innerHTML = summary;
+}
+
+async function sendChat() {
+    const input = document.getElementById("chatInput");
+    const question = input.value.trim();
+    if (!question) return;
+
+    addMessage("user", question);
+    chatHistory.push({ role: "user", text: question });
+    input.value = "";
+
+    const response = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message: JSON.stringify(chatHistory) })
+    });
+
+    const answer = await response.text();
+    addMessage("ai", answer);
+    chatHistory.push({ role: "ai", text: answer });
+}
+</script>
+
+</body>
+</html>
